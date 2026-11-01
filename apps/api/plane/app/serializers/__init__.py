@@ -135,3 +135,9 @@ from .draft import (
     DraftIssueSerializer,
     DraftIssueDetailSerializer,
 )
+
+from .stringx import (
+    AcceptanceRecordSerializer,
+    TaskDefinitionRevisionSerializer,
+    TaskDefinitionSerializer,
+)
