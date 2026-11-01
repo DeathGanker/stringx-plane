@@ -6,12 +6,12 @@
 
 import { useState, useEffect } from "react";
 import { observer } from "mobx-react";
-import { useRouter } from "next/navigation";
-import { LogOutOutline, SettingsOutline } from "@makeplane/propel/icons";
+import useSWR from "swr";
+import { LogOutOutline, SettingsOutline, AccessAndRolesOutline } from "@makeplane/propel/icons";
 // plane imports
 import { Avatar } from "@makeplane/propel/components/avatar";
 import { Icon } from "@makeplane/propel/components/icon";
-import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
+import { Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger } from "@makeplane/propel/components/menu";
 import { GOD_MODE_URL } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { setToast } from "@plane/blocks/toast";
@@ -23,21 +23,28 @@ import { AppSidebarItem } from "@/components/sidebar/sidebar-item";
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useUser } from "@/hooks/store/user";
+// services
+import { UserService } from "@/services/user.service";
+
+const userService = new UserService();
 
 export const UserMenuRoot = observer(function UserMenuRoot() {
   // states
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  // router
-  const router = useRouter();
   // store hooks
   const { toggleAnySidebarDropdown } = useAppTheme();
   const { data: currentUser } = useUser();
   const { signOut } = useUser();
   const { toggleProfileSettingsModal } = useCommandPalette();
-  // derived values
-  const isUserInstanceAdmin = false;
   // translation
   const { t } = useTranslation();
+
+  const { data: instanceAdminStatus } = useSWR(
+    currentUser?.id ? `CURRENT_USER_INSTANCE_ADMIN_STATUS_${currentUser.id}` : null,
+    () => userService.currentUserInstanceAdminStatus(),
+    { revalidateOnFocus: false, shouldRetryOnError: false }
+  );
+  const isUserInstanceAdmin = Boolean(instanceAdminStatus?.is_instance_admin);
 
   const handleSignOut = () => {
     signOut().catch(() =>
@@ -58,9 +65,6 @@ export const UserMenuRoot = observer(function UserMenuRoot() {
   return (
     <div className="flex items-center">
       <Menu onOpenChange={setIsUserMenuOpen}>
-        {/* propel: `AppSidebarItem` takes no arbitrary props, so it cannot be the Base UI trigger
-            — the popup would have no element to anchor to. The trigger is a plain button wearing
-            the same chrome, with the item's own icon part inside it. */}
         <MenuTrigger
           render={
             <button
@@ -111,6 +115,19 @@ export const UserMenuRoot = observer(function UserMenuRoot() {
                 </div>
               </div>
             </div>
+            {isUserInstanceAdmin && (
+              <div>
+                <MenuItem
+                  variant="accent"
+                  icon={<Icon icon={AccessAndRolesOutline} />}
+                  label={t("enter_god_mode")}
+                  onClick={() => {
+                    window.location.assign(GOD_MODE_URL);
+                  }}
+                />
+                <MenuSeparator />
+              </div>
+            )}
             <div>
               <MenuItem
                 icon={<Icon icon={SettingsOutline} />}
@@ -135,9 +152,6 @@ export const UserMenuRoot = observer(function UserMenuRoot() {
             </div>
             <div>
               <MenuItem icon={<Icon icon={LogOutOutline} />} label={t("sign_out")} onClick={handleSignOut} />
-              {isUserInstanceAdmin && (
-                <MenuItem variant="accent" label={t("enter_god_mode")} onClick={() => router.push(GOD_MODE_URL)} />
-              )}
             </div>
           </div>
         </MenuContent>
