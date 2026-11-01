@@ -39,6 +39,7 @@ export * from "./sidebar";
 export * from "./spreadsheet";
 export * from "./state";
 export * from "./stickies";
+export * from "./stringx";
 export * from "./subscription";
 export * from "./swr";
 export * from "./tab-indices";

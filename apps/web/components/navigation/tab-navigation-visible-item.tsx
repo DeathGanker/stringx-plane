@@ -47,7 +47,7 @@ export function TabNavigationVisibleItem({
         <ContextMenu>
           {/* The active underline is Propel's `TabsIndicator`, drawn by the enclosing `TabsList`. */}
           <ContextMenuTrigger render={<div />}>
-            <UnderlineTabLink value={item.key} label={t(item.i18n_key)} to={item.href} />
+            <UnderlineTabLink value={item.key} label={item.label ?? t(item.i18n_key)} to={item.href} />
           </ContextMenuTrigger>
           <ContextMenuContent>
             <ContextMenuItem

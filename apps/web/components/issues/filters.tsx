@@ -4,21 +4,17 @@
  * See the LICENSE file for details.
  */
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { observer } from "mobx-react";
-import { BarOutline, PreferencesOutline } from "@makeplane/propel/icons";
+import { PreferencesOutline } from "@makeplane/propel/icons";
 // plane imports
-import { EIssueFilterType, ISSUE_STORE_TO_FILTERS_MAP } from "@plane/constants";
+import { EIssueFilterType, ISSUE_STORE_TO_FILTERS_MAP, STRINGX_PHASE1 } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@makeplane/propel/elements/button";
-import type { IIssueDisplayFilterOptions, IIssueDisplayProperties } from "@plane/types";
+import type { IIssueDisplayFilterOptions, IIssueDisplayProperties, TProject } from "@plane/types";
 import { EIssueLayoutTypes, EIssuesStoreType } from "@plane/types";
 // hooks
 import { useIssues } from "@/hooks/store/use-issues";
-// plane web imports
-import type { TProject } from "@plane/types";
 // local imports
-import { WorkItemsModal } from "../analytics/work-items/modal";
 import { WorkItemFiltersToggle } from "../work-item-filters/filters-toggle";
 import {
   DisplayFiltersSelection,
@@ -34,26 +30,13 @@ type Props = {
   canUserCreateIssue: boolean | undefined;
   storeType?: EIssuesStoreType.PROJECT | EIssuesStoreType.EPIC;
 };
-const LAYOUTS = [
-  EIssueLayoutTypes.LIST,
-  EIssueLayoutTypes.KANBAN,
-  EIssueLayoutTypes.CALENDAR,
-  EIssueLayoutTypes.SPREADSHEET,
-  EIssueLayoutTypes.GANTT,
-];
+// StringX Phase 1: Calendar / Gantt demoted from the default layout switcher.
+const LAYOUTS = [...STRINGX_PHASE1.primaryIssueLayouts];
 
 export const HeaderFilters = observer(function HeaderFilters(props: Props) {
-  const {
-    currentProjectDetails,
-    projectId,
-    workspaceSlug,
-    canUserCreateIssue,
-    storeType = EIssuesStoreType.PROJECT,
-  } = props;
+  const { currentProjectDetails, projectId, workspaceSlug, storeType = EIssuesStoreType.PROJECT } = props;
   // i18n
   const { t } = useTranslation();
-  // states
-  const [analyticsModal, setAnalyticsModal] = useState(false);
   // store hooks
   const {
     issuesFilter: { issueFilters, updateFilters },
@@ -88,12 +71,6 @@ export const HeaderFilters = observer(function HeaderFilters(props: Props) {
 
   return (
     <>
-      <WorkItemsModal
-        isOpen={analyticsModal}
-        onClose={() => setAnalyticsModal(false)}
-        projectDetails={currentProjectDetails ?? undefined}
-        isEpic={storeType === EIssuesStoreType.EPIC}
-      />
       <div className="hidden @4xl:flex">
         <LayoutSelection
           layouts={LAYOUTS}
@@ -125,25 +102,6 @@ export const HeaderFilters = observer(function HeaderFilters(props: Props) {
           isEpic={storeType === EIssuesStoreType.EPIC}
         />
       </FiltersDropdown>
-      {canUserCreateIssue ? (
-        <div className="hidden md:flex">
-          <Button
-            type="button"
-            variant="secondary"
-            size="md"
-            stretch="auto"
-            aria-label={t("common.analytics")}
-            onClick={() => setAnalyticsModal(true)}
-          >
-            <span className="hidden @4xl:flex">{t("common.analytics")}</span>
-            <span className="flex @4xl:hidden">
-              <BarOutline className="size-3.5" />
-            </span>
-          </Button>
-        </div>
-      ) : (
-        <></>
-      )}
     </>
   );
 });

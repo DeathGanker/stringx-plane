@@ -40,6 +40,8 @@ export type TNavigationItem = {
   sortOrder: number;
   i18n_key: string;
   key: string;
+  /** When set, rendered as-is instead of translating `i18n_key`. */
+  label?: string;
 };
 
 type TTabNavigationRootProps = {
@@ -245,7 +247,7 @@ export const TabNavigationRoot = observer(function TabNavigationRoot(props: TTab
                           }}
                           className="inline-block"
                         >
-                          <UnderlineTabLink value={item.key} label={t(item.i18n_key)} to={item.href} />
+                          <UnderlineTabLink value={item.key} label={item.label ?? t(item.i18n_key)} to={item.href} />
                         </div>
                       );
                     })}

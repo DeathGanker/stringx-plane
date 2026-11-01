@@ -12,7 +12,8 @@ export type TTabPreferences = {
 
 // Constants
 export const TAB_PREFS_KEY = "plane_tab_prefs";
-export const DEFAULT_TAB_KEY = "work_items";
+/** StringX Phase 1: project landing is 项目 360, not the Issues workbench. */
+export const DEFAULT_TAB_KEY = "overview";
 
 /**
  * Get tab preferences for a specific project from localStorage
@@ -66,16 +67,19 @@ export const saveTabPreferences = (projectId: string, preferences: TTabPreferenc
 export const getTabUrl = (workspaceSlug: string, projectId: string, tabKey: string): string => {
   const baseUrl = `/${workspaceSlug}/projects/${projectId}`;
   const tabUrlMap: Record<string, string> = {
+    overview: `${baseUrl}/overview`,
+    materials: `${baseUrl}/materials`,
+    sow: `${baseUrl}/sow`,
+    acceptance: `${baseUrl}/acceptance`,
     work_items: `${baseUrl}/issues`,
     cycles: `${baseUrl}/cycles`,
     modules: `${baseUrl}/modules`,
     views: `${baseUrl}/views`,
     pages: `${baseUrl}/pages`,
     intake: `${baseUrl}/intake`,
-    overview: `${baseUrl}/overview`,
     epics: `${baseUrl}/epics`,
   };
-  return tabUrlMap[tabKey] || `${baseUrl}/issues`; // fallback to issues
+  return tabUrlMap[tabKey] || `${baseUrl}/overview`;
 };
 
 /**
@@ -112,6 +116,9 @@ export const getValidatedDefaultTab = (projectId: string, availableTabKeys: stri
     return defaultTab;
   }
 
-  // Fall back to work_items
-  return DEFAULT_TAB_KEY;
+  // Fall back to StringX default (overview) or first available tab
+  if (availableTabKeys.includes(DEFAULT_TAB_KEY)) {
+    return DEFAULT_TAB_KEY;
+  }
+  return availableTabKeys[0] ?? DEFAULT_TAB_KEY;
 };

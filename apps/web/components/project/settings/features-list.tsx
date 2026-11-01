@@ -27,6 +27,11 @@ type Props = {
   isAdmin: boolean;
 };
 
+/**
+ * Feature toggles remain available in settings (explicit opt-in).
+ * StringX Phase 1 defaults these off and keeps them out of primary nav when false.
+ * Hard rule: Cycles ≠ M1–M4, Modules ≠ SOW stages, Intake ≠ 材料立项.
+ */
 const PROJECT_FEATURES_LIST = {
   cycles: {
     key: "cycles",
@@ -109,6 +114,9 @@ export const ProjectFeaturesList = observer(function ProjectFeaturesList(props: 
     <>
       <div>
         <SettingsHeading title={t("projects_and_issues")} description={t("projects_and_issues_description")} />
+        <p className="mt-2 text-13 leading-5 text-tertiary">
+          StringX 第一阶段默认关闭下列能力，且不进主导航。Cycles / Modules 禁止冒充 SOW M1–M4；Intake 禁止冒充材料立项。
+        </p>
         <div className="mt-6 flex flex-col gap-y-4">
           {Object.entries(PROJECT_FEATURES_LIST).map(([featureItemKey, featureItem]) => (
             <div key={featureItemKey}>
@@ -135,9 +143,6 @@ export const ProjectFeaturesList = observer(function ProjectFeaturesList(props: 
                   />
                 }
               />
-              {/* {currentProjectDetails?.[featureItem.property as keyof IProject] && (
-                <div className="pl-14">{featureItem.renderChildren?.(currentProjectDetails, workspaceSlug)}</div>
-              )} */}
             </div>
           ))}
         </div>

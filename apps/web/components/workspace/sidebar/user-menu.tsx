@@ -8,8 +8,8 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
-import { PiChatLogo } from "@plane/blocks/icons";
-import { DashboardsOutline, DraftsOutline, HomeOutline, YourWorkOutline } from "@makeplane/propel/icons";
+import { STRINGX_PHASE1 } from "@plane/constants";
+import { DraftsOutline, HomeOutline, YourWorkOutline } from "@makeplane/propel/icons";
 import { EUserWorkspaceRoles } from "@plane/types";
 // hooks
 import { useUserPermissions, useUser } from "@/hooks/store/user";
@@ -23,6 +23,7 @@ export const SidebarUserMenu = observer(function SidebarUserMenu() {
   const { workspaceUserInfo } = useUserPermissions();
   const { data: currentUser } = useUser();
 
+  // StringX Phase 1: Dashboards + Plane AI omitted from primary user menu.
   const SIDEBAR_USER_MENU_ITEMS = [
     {
       key: "home",
@@ -30,13 +31,6 @@ export const SidebarUserMenu = observer(function SidebarUserMenu() {
       href: `/${workspaceSlug.toString()}/`,
       access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER, EUserWorkspaceRoles.GUEST],
       Icon: HomeOutline,
-    },
-    {
-      key: "dashboards",
-      labelTranslationKey: "workspace_dashboards",
-      href: `/${workspaceSlug.toString()}/dashboards/`,
-      access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
-      Icon: DashboardsOutline,
     },
     {
       key: "your-work",
@@ -52,14 +46,7 @@ export const SidebarUserMenu = observer(function SidebarUserMenu() {
       access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
       Icon: DraftsOutline,
     },
-    {
-      key: "pi-chat",
-      labelTranslationKey: "sidebar.pi_chat",
-      href: `/${workspaceSlug.toString()}/pi-chat/`,
-      access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER, EUserWorkspaceRoles.GUEST],
-      Icon: PiChatLogo,
-    },
-  ];
+  ].filter((item) => !STRINGX_PHASE1.hiddenUserMenuKeys.includes(item.key as never));
 
   const draftIssueCount = workspaceUserInfo[workspaceSlug.toString()]?.draft_issue_count;
 

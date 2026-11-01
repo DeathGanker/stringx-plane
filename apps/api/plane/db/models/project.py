@@ -95,7 +95,8 @@ class Project(ChangeTrackerMixin, BaseModel):
     module_view = models.BooleanField(default=False)
     cycle_view = models.BooleanField(default=False)
     issue_views_view = models.BooleanField(default=False)
-    page_view = models.BooleanField(default=True)
+    # StringX Phase 1: Pages off by default (still toggleable in project settings).
+    page_view = models.BooleanField(default=False)
     intake_view = models.BooleanField(default=False)
     is_time_tracking_enabled = models.BooleanField(default=False)
     is_issue_type_enabled = models.BooleanField(default=False)

@@ -56,7 +56,7 @@ export function TabNavigationOverflowMenu({ overflowItems, isActive, tabPreferen
             <MenuItem
               key={`${item.key}-overflow-${itemIsActive ? "active" : "inactive"}`}
               render={<Link to={item.href} className="group/menu-item" />}
-              label={t(item.i18n_key)}
+              label={item.label ?? t(item.i18n_key)}
               trailing={
                 <div className="flex items-center">
                   {/* Show Eye icon ONLY for user-hidden items */}

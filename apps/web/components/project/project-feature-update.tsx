@@ -54,7 +54,7 @@ export const ProjectFeatureUpdate = observer(function ProjectFeatureUpdate(props
           size="md"
           stretch="auto"
           nativeButton={false}
-          render={<Link href={`/${workspaceSlug}/projects/${projectId}/issues`} onClick={onClose} />}
+          render={<Link href={`/${workspaceSlug}/projects/${projectId}/overview`} onClick={onClose} />}
           label={t("open_project")}
         />
       </DialogActions>
