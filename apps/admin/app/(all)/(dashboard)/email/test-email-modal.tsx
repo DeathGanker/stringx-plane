@@ -61,7 +61,7 @@ export function SendTestEmailModal(props: Props) {
         return;
       })
       .catch((err) => {
-        setError(err?.error || "Failed to send email");
+        setError(err?.error || "发送邮件失败");
         setSendEmailStep(ESendEmailSteps.FAILED);
       })
       .finally(() => {
@@ -87,10 +87,10 @@ export function SendTestEmailModal(props: Props) {
             <DialogHeading>
               <DialogTitle>
                 {sendEmailStep === ESendEmailSteps.SEND_EMAIL
-                  ? "Send test email"
+                  ? "发送测试邮件"
                   : sendEmailStep === ESendEmailSteps.SUCCESS
-                    ? "Email send"
-                    : "Failed"}
+                    ? "邮件已发送"
+                    : "发送失败"}
               </DialogTitle>
             </DialogHeading>
           </DialogHeader>
@@ -103,18 +103,16 @@ export function SendTestEmailModal(props: Props) {
                   size="lg"
                   value={receiverEmail}
                   onChange={(e) => setReceiverEmail(e.target.value)}
-                  placeholder="Receiver email"
-                  aria-label="Receiver email"
+                  placeholder="收件人邮箱"
+                  aria-label="收件人邮箱"
                   tabIndex={0}
                 />
               </InputGroup>
             )}
             {sendEmailStep === ESendEmailSteps.SUCCESS && (
               <div className="flex flex-col gap-y-4 text-13">
-                <p>
-                  We have sent the test email to {receiverEmail}. Please check your spam folder if you cannot find it.
-                </p>
-                <p>If you still cannot find it, recheck your SMTP configuration and trigger a new test email.</p>
+                <p>测试邮件已发送至 {receiverEmail}。若未收到，请检查垃圾邮件文件夹。</p>
+                <p>若仍未找到，请复查 SMTP 配置后重新发送测试邮件。</p>
               </div>
             )}
             {sendEmailStep === ESendEmailSteps.FAILED && <div className="text-13">{error}</div>}
@@ -127,7 +125,7 @@ export function SendTestEmailModal(props: Props) {
             stretch="auto"
             onClick={handleClose}
             tabIndex={0}
-            label={sendEmailStep === ESendEmailSteps.SEND_EMAIL ? "Cancel" : "Close"}
+            label={sendEmailStep === ESendEmailSteps.SEND_EMAIL ? "取消" : "关闭"}
           />
           {sendEmailStep === ESendEmailSteps.SEND_EMAIL && (
             <Button
@@ -137,7 +135,7 @@ export function SendTestEmailModal(props: Props) {
               loading={isLoading}
               onClick={handleSubmit}
               tabIndex={0}
-              label={isLoading ? "Sending email" : "Send email"}
+              label={isLoading ? "发送中" : "发送邮件"}
             />
           )}
         </DialogActions>

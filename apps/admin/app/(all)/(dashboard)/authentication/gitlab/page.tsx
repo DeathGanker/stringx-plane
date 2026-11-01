@@ -44,36 +44,35 @@ const InstanceGitlabAuthenticationPage = observer(function InstanceGitlabAuthent
     const updateConfigPromise = updateInstanceConfigurations(payload);
 
     setPromiseToast(updateConfigPromise, {
-      loading: "Saving Configuration",
+      loading: "正在保存配置",
       success: {
-        title: "Configuration saved",
-        message: () => `GitLab authentication is now ${value === "1" ? "active" : "disabled"}.`,
+        title: "配置已保存",
+        message: () => `GitLab 认证现已${value === "1" ? "启用" : "关闭"}。`,
       },
       error: {
-        title: "Error",
-        message: () => "Failed to save configuration",
+        title: "错误",
+        message: () => "保存配置失败",
       },
     });
 
-    await updateConfigPromise
-      .then(() => {
-        setIsSubmitting(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsSubmitting(false);
-      });
+    try {
+      await updateConfigPromise;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <PageWrapper
       customHeader={
         <AuthenticationMethodCard
           name="GitLab"
-          description="Allow members to login or sign up to plane with their GitLab accounts."
+          description="允许成员使用 GitLab 账号登录或注册 Plane。"
           icon={<img src={GitlabLogo} height={24} width={24} alt="GitLab Logo" />}
           config={
             <Switch
-              aria-label="Enable GitLab authentication"
+              aria-label="启用 GitLab 认证"
               checked={Boolean(parseInt(enableGitlabConfig))}
               onCheckedChange={() => {
                 if (Boolean(parseInt(enableGitlabConfig)) === true) {
@@ -106,6 +105,6 @@ const InstanceGitlabAuthenticationPage = observer(function InstanceGitlabAuthent
   );
 });
 
-export const meta: Route.MetaFunction = () => [{ title: "GitLab Authentication - God Mode" }];
+export const meta: Route.MetaFunction = () => [{ title: "GitLab 认证 - God Mode" }];
 
 export default InstanceGitlabAuthenticationPage;

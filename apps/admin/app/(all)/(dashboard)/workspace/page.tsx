@@ -54,32 +54,31 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
     const updateConfigPromise = updateInstanceConfigurations(payload);
 
     setPromiseToast(updateConfigPromise, {
-      loading: "Saving configuration",
+      loading: "正在保存配置",
       success: {
-        title: "Success",
-        message: () => "Configuration saved successfully",
+        title: "成功",
+        message: () => "配置已保存",
       },
       error: {
-        title: "Error",
-        message: () => "Failed to save configuration",
+        title: "错误",
+        message: () => "保存配置失败",
       },
     });
 
-    await updateConfigPromise
-      .then(() => {
-        setIsSubmitting(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsSubmitting(false);
-      });
+    try {
+      await updateConfigPromise;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <PageWrapper
       header={{
-        title: "Workspaces on this instance",
-        description: "See all workspaces and control who can create them.",
+        title: "本实例上的工作区",
+        description: "查看全部工作区，并控制谁可以创建工作区。",
       }}
     >
       <div className="space-y-3">
@@ -87,9 +86,9 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
           <div className={cn("flex w-full items-center gap-14 rounded-sm")}>
             <div className="flex grow items-center gap-4">
               <div className="grow">
-                <div className="pb-1 text-16 font-medium">Prevent anyone else from creating a workspace.</div>
+                <div className="pb-1 text-16 font-medium">禁止其他人创建工作区</div>
                 <div className={cn("text-11 leading-5 font-regular text-tertiary")}>
-                  Toggling this on will let only you create workspaces. You will have to invite users to new workspaces.
+                  开启后仅你可创建工作区，新工作区需由你邀请用户加入。
                 </div>
               </div>
             </div>
@@ -105,7 +104,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                     }
                   }}
                   size="sm"
-                  aria-label="Prevent anyone else from creating a workspace"
+                  aria-label="禁止其他人创建工作区"
                   disabled={isSubmitting}
                 />
               </div>
@@ -121,14 +120,13 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
             <div className="flex items-center justify-between gap-2 pt-6">
               <div className="flex flex-col items-start gap-x-2">
                 <div className="flex items-center gap-2 text-16 font-medium">
-                  All workspaces on this instance <span className="text-tertiary">• {workspaceIds.length}</span>
+                  本实例全部工作区 <span className="text-tertiary">• {workspaceIds.length}</span>
                   {workspaceLoader && ["mutation", "pagination"].includes(workspaceLoader) && (
                     <LoaderIcon className="h-4 w-4 animate-spin" />
                   )}
                 </div>
                 <div className={cn("text-11 leading-5 font-regular text-tertiary")}>
-                  You can&apos;t yet delete workspaces and you can only go to the workspace if you are an Admin or a
-                  Member.
+                  暂不支持删除工作区；仅当你是该工作区的管理员或成员时才能进入。
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -138,7 +136,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                   stretch="auto"
                   nativeButton={false}
                   render={<Link href="/workspace/create" />}
-                  label="Create workspace"
+                  label="创建工作区"
                 />
               </div>
             </div>
@@ -155,7 +153,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                   stretch="auto"
                   onClick={() => fetchNextWorkspaces()}
                   loading={workspaceLoader === "pagination"}
-                  label="Load more"
+                  label="加载更多"
                 />
               </div>
             )}
@@ -173,6 +171,6 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
   );
 });
 
-export const meta: Route.MetaFunction = () => [{ title: "Workspace Management - God Mode" }];
+export const meta: Route.MetaFunction = () => [{ title: "工作区管理 - God Mode" }];
 
 export default WorkspaceManagementPage;

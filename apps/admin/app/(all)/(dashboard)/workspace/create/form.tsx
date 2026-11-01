@@ -54,36 +54,35 @@ export function WorkspaceCreateForm() {
   }, []);
 
   const handleCreateWorkspace = async (formData: IWorkspace) => {
-    await instanceWorkspaceService
-      .slugCheck(formData.slug)
-      .then(async (res) => {
-        if (res.status === true && !RESTRICTED_URLS.includes(formData.slug)) {
-          setSlugError(false);
-          await createWorkspace(formData)
-            .then(async () => {
-              setToast({
-                type: "success",
-                title: "Success!",
-                message: "Workspace created successfully.",
-              });
-              router.push(`/workspace`);
-            })
-            .catch(() => {
-              setToast({
-                type: "error",
-                title: "Error!",
-                message: "Workspace could not be created. Please try again.",
-              });
-            });
-        } else setSlugError(true);
-      })
-      .catch(() => {
-        setToast({
-          type: "error",
-          title: "Error!",
-          message: "Some error occurred while creating workspace. Please try again.",
-        });
+    try {
+      const res = await instanceWorkspaceService.slugCheck(formData.slug);
+      if (res.status === true && !RESTRICTED_URLS.includes(formData.slug)) {
+        setSlugError(false);
+        try {
+          await createWorkspace(formData);
+          setToast({
+            type: "success",
+            title: "成功",
+            message: "工作区已创建",
+          });
+          router.push(`/workspace`);
+        } catch {
+          setToast({
+            type: "error",
+            title: "错误",
+            message: "无法创建工作区，请重试。",
+          });
+        }
+      } else {
+        setSlugError(true);
+      }
+    } catch {
+      setToast({
+        type: "error",
+        title: "错误",
+        message: "创建工作区时出错，请重试。",
       });
+    }
   };
 
   useEffect(
@@ -98,7 +97,7 @@ export function WorkspaceCreateForm() {
     <div className="space-y-8">
       <div className="grid-col grid w-full max-w-4xl grid-cols-1 items-start justify-between gap-x-10 gap-y-6 lg:grid-cols-2">
         <div className="flex flex-col gap-1">
-          <h4 className="text-13 text-tertiary">Name your workspace</h4>
+          <h4 className="text-13 text-tertiary">工作区名称</h4>
           <div className="flex flex-col gap-1">
             <Controller
               control={control}
@@ -123,7 +122,7 @@ export function WorkspaceCreateForm() {
                     ref={ref}
                     aria-invalid={Boolean(errors.name)}
                     data-invalid={errors.name ? true : undefined}
-                    placeholder="Something familiar and recognizable is always best."
+                    placeholder="建议使用便于识别的名称"
                   />
                 </InputGroup>
               )}
@@ -132,7 +131,7 @@ export function WorkspaceCreateForm() {
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <h4 className="text-13 text-tertiary">Set your workspace&apos;s URL</h4>
+          <h4 className="text-13 text-tertiary">工作区 URL</h4>
           <Controller
             control={control}
             name="slug"
@@ -160,22 +159,22 @@ export function WorkspaceCreateForm() {
               </InputGroup>
             )}
           />
-          {slugError && <p className="text-13 text-danger-primary">This URL is taken. Try something else.</p>}
+          {slugError && <p className="text-13 text-danger-primary">该 URL 已被占用，请换一个。</p>}
           {invalidSlug && (
-            <p className="text-13 text-danger-primary">{`URLs can contain only ( - ), ( _ ) and alphanumeric characters.`}</p>
+            <p className="text-13 text-danger-primary">URL 仅可包含字母、数字、连字符（-）与下划线（_）。</p>
           )}
           {errors.slug && <span className="text-11 text-danger-primary">{errors.slug.message}</span>}
         </div>
         <div className="flex flex-col gap-1">
-          <h4 className="text-13 text-tertiary">How many people will use this workspace?</h4>
+          <h4 className="text-13 text-tertiary">预计有多少人使用此工作区？</h4>
           <div className="w-full">
             <Controller
               name="organization_size"
               control={control}
-              rules={{ required: "This is a required field." }}
+              rules={{ required: "此为必填项。" }}
               render={({ field: { value, onChange } }) => (
                 <Select value={value} onValueChange={onChange}>
-                  <SelectTrigger size="lg" placeholder="Select a range" />
+                  <SelectTrigger size="lg" placeholder="选择人数范围" />
                   <SelectContent>
                     <SelectList>
                       {ORGANIZATION_SIZE.map((item) => (
@@ -200,7 +199,7 @@ export function WorkspaceCreateForm() {
           onClick={handleSubmit(handleCreateWorkspace)}
           disabled={!isValid}
           loading={isSubmitting}
-          label={isSubmitting ? "Creating workspace" : "Create workspace"}
+          label={isSubmitting ? "创建中" : "创建工作区"}
         />
         <Button
           variant="secondary"
@@ -208,7 +207,7 @@ export function WorkspaceCreateForm() {
           stretch="auto"
           nativeButton={false}
           render={<Link href="/workspace" />}
-          label="Go back"
+          label="返回"
         />
       </div>
     </div>

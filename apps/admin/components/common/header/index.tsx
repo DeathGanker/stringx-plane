@@ -32,7 +32,7 @@ export const HamburgerToggle = observer(function HamburgerToggle() {
   return (
     <button
       type="button"
-      aria-label="Toggle sidebar"
+      aria-label="切换侧栏"
       className="group flex size-7 cursor-pointer items-center justify-center rounded-sm bg-layer-1 transition-all hover:bg-layer-1-hover md:hidden"
       onClick={() => toggleSidebar(!isSidebarCollapsed)}
     >
@@ -72,11 +72,11 @@ export const AdminHeader = observer(function AdminHeader() {
       <div className="flex w-full flex-grow items-center gap-2 overflow-ellipsis whitespace-nowrap">
         <HamburgerToggle />
         <div>
-          <Breadcrumb aria-label="Breadcrumb">
+          <Breadcrumb aria-label="面包屑">
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  label="Settings"
+                  label="设置"
                   icon={<Icon icon={SettingsOutline} tint="tertiary" />}
                   render={<Link href="/general/" />}
                 />

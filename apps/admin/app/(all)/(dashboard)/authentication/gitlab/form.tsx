@@ -203,7 +203,7 @@ export function InstanceGitlabConfigForm(props: Props) {
                   onClick={(e) => void handleSubmit(onSubmit)(e)}
                   loading={isSubmitting}
                   disabled={!isDirty}
-                  label={isSubmitting ? "Saving" : "Save changes"}
+                  label={isSubmitting ? "保存中" : "保存更改"}
                 />
                 <Button
                   variant="secondary"
@@ -211,7 +211,7 @@ export function InstanceGitlabConfigForm(props: Props) {
                   stretch="auto"
                   nativeButton={false}
                   render={<Link href="/authentication" onClick={handleGoBack} />}
-                  label="Go back"
+                  label="返回"
                 />
               </div>
             </div>

@@ -34,16 +34,18 @@ export const GiteaConfiguration = observer(function GiteaConfiguration(props: Pr
     <>
       {GiteaConfigured ? (
         <div className="flex items-center gap-4">
-          <AnchorButton variant="primary" size="sm" render={<Link href="/authentication/gitea" />} label="Edit" />
+          <AnchorButton variant="primary" size="sm" render={<Link href="/authentication/gitea" />} label="编辑" />
           <Switch
             checked={Boolean(parseInt(GiteaConfig))}
             onCheckedChange={() => {
-              Boolean(parseInt(GiteaConfig)) === true
-                ? updateConfig("IS_GITEA_ENABLED", "0")
-                : updateConfig("IS_GITEA_ENABLED", "1");
+              if (Boolean(parseInt(GiteaConfig)) === true) {
+                updateConfig("IS_GITEA_ENABLED", "0");
+              } else {
+                updateConfig("IS_GITEA_ENABLED", "1");
+              }
             }}
             size="sm"
-            aria-label="Enable Gitea"
+            aria-label="启用 Gitea"
             disabled={disabled}
           />
         </div>
@@ -55,7 +57,7 @@ export const GiteaConfiguration = observer(function GiteaConfiguration(props: Pr
           nativeButton={false}
           render={<Link href="/authentication/gitea" />}
           icon={<SettingsOutline className="h-4 w-4 p-0.5 text-tertiary" />}
-          label="Configure"
+          label="配置"
         />
       )}
     </>

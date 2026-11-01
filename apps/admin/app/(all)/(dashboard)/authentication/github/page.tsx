@@ -50,25 +50,24 @@ const InstanceGithubAuthenticationPage = observer(function InstanceGithubAuthent
     const updateConfigPromise = updateInstanceConfigurations(payload);
 
     setPromiseToast(updateConfigPromise, {
-      loading: "Saving Configuration",
+      loading: "正在保存配置",
       success: {
-        title: "Configuration saved",
-        message: () => `GitHub authentication is now ${value === "1" ? "active" : "disabled"}.`,
+        title: "配置已保存",
+        message: () => `GitHub 认证现已${value === "1" ? "启用" : "关闭"}。`,
       },
       error: {
-        title: "Error",
-        message: () => "Failed to save configuration",
+        title: "错误",
+        message: () => "保存配置失败",
       },
     });
 
-    await updateConfigPromise
-      .then(() => {
-        setIsSubmitting(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsSubmitting(false);
-      });
+    try {
+      await updateConfigPromise;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isGithubEnabled = enableGithubConfig === "1";
@@ -78,7 +77,7 @@ const InstanceGithubAuthenticationPage = observer(function InstanceGithubAuthent
       customHeader={
         <AuthenticationMethodCard
           name="GitHub"
-          description="Allow members to login or sign up to plane with their GitHub accounts."
+          description="允许成员使用 GitHub 账号登录或注册 Plane。"
           icon={
             <img
               src={resolveGeneralTheme(resolvedTheme) === "dark" ? githubDarkModeImage : githubLightModeImage}
@@ -89,7 +88,7 @@ const InstanceGithubAuthenticationPage = observer(function InstanceGithubAuthent
           }
           config={
             <Switch
-              aria-label="Enable GitHub authentication"
+              aria-label="启用 GitHub 认证"
               checked={isGithubEnabled}
               onCheckedChange={() => {
                 updateConfig("IS_GITHUB_ENABLED", isGithubEnabled ? "0" : "1");
@@ -118,6 +117,6 @@ const InstanceGithubAuthenticationPage = observer(function InstanceGithubAuthent
   );
 });
 
-export const meta: Route.MetaFunction = () => [{ title: "GitHub Authentication - God Mode" }];
+export const meta: Route.MetaFunction = () => [{ title: "GitHub 认证 - God Mode" }];
 
 export default InstanceGithubAuthenticationPage;

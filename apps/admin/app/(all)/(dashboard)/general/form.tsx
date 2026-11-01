@@ -47,8 +47,8 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
       .then(() =>
         setToast({
           type: "success",
-          title: "Success",
-          message: "Settings updated successfully",
+          title: "已保存",
+          message: "常规设置已更新",
         })
       )
       .catch((err) => console.error(err));
@@ -57,21 +57,21 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <div className="text-16 font-medium text-primary">Instance details</div>
+        <div className="text-16 font-medium text-primary">实例详情</div>
         <div className="grid-col grid w-full grid-cols-1 items-center justify-between gap-8 md:grid-cols-2 lg:grid-cols-3">
           <ControllerInput
             key="instance_name"
             name="instance_name"
             control={control}
             type="text"
-            label="Name of instance"
-            placeholder="Instance name"
+            label="实例名称"
+            placeholder="请输入实例名称"
             error={Boolean(errors.instance_name)}
             required
           />
 
           <div className="flex flex-col gap-1">
-            <h4 className="text-13 text-tertiary">Email</h4>
+            <h4 className="text-13 text-tertiary">邮箱</h4>
             <div className="w-full">
               <InputGroup size="lg">
                 <Input
@@ -80,7 +80,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
                   type="email"
                   size="lg"
                   value={instanceAdmins[0]?.user_detail?.email ?? ""}
-                  placeholder="Admin email"
+                  placeholder="管理员邮箱"
                   autoComplete="on"
                   disabled
                 />
@@ -89,7 +89,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
           </div>
 
           <div className="flex flex-col gap-1">
-            <h4 className="text-13 text-tertiary">Instance ID</h4>
+            <h4 className="text-13 text-tertiary">实例 ID</h4>
             <div className="w-full">
               <InputGroup size="lg">
                 <Input
@@ -107,7 +107,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
       </div>
 
       <div className="space-y-6">
-        <div className="border-b border-subtle pb-1.5 text-16 font-medium text-primary">Telemetry</div>
+        <div className="border-b border-subtle pb-1.5 text-16 font-medium text-primary">遥测</div>
         <div className="flex items-center gap-14">
           <div className="flex grow items-center gap-4">
             <div className="shrink-0">
@@ -116,18 +116,18 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
               </div>
             </div>
             <div className="grow">
-              <div className="text-13 leading-5 font-medium text-primary">Let Plane collect anonymous usage data</div>
+              <div className="text-13 leading-5 font-medium text-primary">允许 Plane 收集匿名使用数据</div>
               <div className="text-11 leading-5 font-regular text-tertiary">
-                No PII is collected.This anonymized data is used to understand how you use Plane and build new features
-                in line with{" "}
+                不收集个人身份信息。匿名数据用于了解产品使用方式，并按{" "}
                 <a
                   href="https://developers.plane.so/self-hosting/telemetry"
                   target="_blank"
                   className="text-accent-primary hover:underline"
                   rel="noreferrer"
                 >
-                  our Telemetry Policy.
+                  遥测政策
                 </a>
+                迭代功能。
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
               name="is_telemetry_enabled"
               render={({ field: { value, onChange } }) => (
                 <Switch
-                  aria-label="Let Plane collect anonymous usage data"
+                  aria-label="允许 Plane 收集匿名使用数据"
                   checked={value ?? false}
                   onCheckedChange={onChange}
                   size="sm"
@@ -158,7 +158,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
             void handleSubmit(onSubmit)();
           }}
           loading={isSubmitting}
-          label={isSubmitting ? "Saving" : "Save changes"}
+          label={isSubmitting ? "保存中" : "保存更改"}
         />
       </div>
     </div>
