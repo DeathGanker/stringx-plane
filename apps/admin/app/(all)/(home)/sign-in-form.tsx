@@ -95,7 +95,7 @@ export function InstanceSignInForm() {
   }, [errorCode, errorMessage]);
 
   const isButtonDisabled = useMemo(
-    () => (!isSubmitting && formData.email && formData.password ? false : true),
+    () => isSubmitting || !formData.email || !formData.password,
     [formData.email, formData.password, isSubmitting]
   );
 
@@ -113,10 +113,7 @@ export function InstanceSignInForm() {
       <AuthHeader />
       <div className="mt-10 flex w-full flex-grow flex-col items-center justify-center py-6">
         <div className="relative flex w-full max-w-[22.5rem] flex-col gap-6">
-          <FormHeader
-            heading="Manage your Plane instance"
-            subHeading="Configure instance-wide settings to secure your instance"
-          />
+          <FormHeader heading="管理你的 Plane 实例" subHeading="配置实例级设置以保障实例安全" />
           <form
             className="space-y-4"
             method="POST"
@@ -133,7 +130,7 @@ export function InstanceSignInForm() {
 
             <div className="w-full space-y-1">
               <label className="text-13 font-medium text-tertiary" htmlFor="email">
-                Email <span className="text-danger-primary">*</span>
+                邮箱 <span className="text-danger-primary">*</span>
               </label>
               <InputGroup size="lg">
                 <Input
@@ -145,14 +142,13 @@ export function InstanceSignInForm() {
                   value={formData.email}
                   onChange={(e) => handleFormChange("email", e.target.value)}
                   autoComplete="off"
-                  autoFocus
                 />
               </InputGroup>
             </div>
 
             <div className="w-full space-y-1">
               <label className="text-13 font-medium text-tertiary" htmlFor="password">
-                Password <span className="text-danger-primary">*</span>
+                密码 <span className="text-danger-primary">*</span>
               </label>
               <InputGroup size="lg">
                 <Input
@@ -160,7 +156,7 @@ export function InstanceSignInForm() {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
+                  placeholder="请输入密码"
                   value={formData.password}
                   onChange={(e) => handleFormChange("password", e.target.value)}
                   autoComplete="off"
@@ -168,7 +164,7 @@ export function InstanceSignInForm() {
                 {showPassword ? (
                   <button
                     type="button"
-                    aria-label="Hide password"
+                    aria-label="隐藏密码"
                     className="flex items-center justify-center text-placeholder"
                     onClick={() => setShowPassword(false)}
                   >
@@ -177,7 +173,7 @@ export function InstanceSignInForm() {
                 ) : (
                   <button
                     type="button"
-                    aria-label="Show password"
+                    aria-label="显示密码"
                     className="flex items-center justify-center text-placeholder"
                     onClick={() => setShowPassword(true)}
                   >
@@ -194,7 +190,7 @@ export function InstanceSignInForm() {
                 stretch="full"
                 disabled={isButtonDisabled}
                 loading={isSubmitting}
-                label="Sign in"
+                label="登录"
               />
             </div>
           </form>

@@ -1,0 +1,13 @@
+# Local port remaps so StringX can coexist with another Plane / Postgres / Redis / MinIO stack.
+# Auto-loaded with `docker compose` alongside docker-compose.yml.
+# For docker-compose-local.yml, also pass: -f docker-compose.override.yml
+services:
+  plane-redis:
+    ports:
+      - "6389:6379"
+  plane-db:
+    ports:
+      - "5439:5432"
+  plane-minio:
+    ports:
+      - "9010:9000"
