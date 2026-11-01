@@ -153,7 +153,8 @@ export const ProjectNavigation = observer(function ProjectNavigation(props: TPro
       navItems.push(...additionalNavigationItems(workspaceSlug, projectId));
     }
 
-    return navItems.toSorted((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    // oxlint-disable-next-line unicorn/no-array-sort
+    return navItems.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
   }, [workspaceSlug, projectId, baseNavigation, additionalNavigationItems]);
 
   const isActive = useCallback(

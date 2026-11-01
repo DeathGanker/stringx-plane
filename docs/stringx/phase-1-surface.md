@@ -33,15 +33,16 @@
 | Plane AI（Pi Chat）/ Dashboards                           | 用户菜单隐藏                                     | 内置 AI 后置                       |
 | GitHub / Slack / Reactions / Votes / Issue Types / 计费壳 | 不进本阶段产品面                                 | —                                  |
 
-## StringX 必建（本刀仅路由占位）
+## StringX 必建
 
-| 路径                                           | 含义                     |
-| ---------------------------------------------- | ------------------------ |
-| `/:workspaceSlug/delivery`                     | 跨项目 **交付概况**      |
-| `/:workspaceSlug/projects/:projectId/overview` | **项目 360**（默认落地） |
-| `.../materials`                                | 材料立项（人工确认）     |
-| `.../sow`                                      | SOW 基线 + M1–M4         |
-| `.../acceptance`                               | 人工验收（≠ completed）  |
+| 路径                                           | 状态（第一阶段）                       |
+| ---------------------------------------------- | -------------------------------------- |
+| `/:workspaceSlug/delivery`                     | 占位（刀 1）                           |
+| `/:workspaceSlug/projects/:projectId/overview` | 占位（刀 1）                           |
+| `.../materials`                                | 占位（刀 1；模型在后续刀）             |
+| `.../sow`                                      | 占位（刀 1；真实 M1–M4 在后续刀）      |
+| `.../acceptance`                               | **刀 2 已接独立验收记录列表**          |
+| Issue 详情面板                                 | **刀 2：任务定义 revision + 验收读写** |
 
 ## 代码触点（摘要）
 
@@ -49,3 +50,4 @@
 - 种子不强制开 Cycles/Modules：`workspace_seed_task.py`
 - 导航 / 布局：`packages/constants/src/stringx.ts`、`workspace.ts`、`settings/project.ts`
 - 路由：`apps/web/app/routes/extended.ts`
+- 任务定义 / 验收：`apps/api/plane/db/models/stringx.py` + migration `0127`；API `plane/app/urls/stringx.py`；Web `components/stringx/`

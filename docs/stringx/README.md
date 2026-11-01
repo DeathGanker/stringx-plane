@@ -12,8 +12,13 @@
 - MCP 管日常输入/查询；Web 管呈现、人工确认与证据追溯。
 - **禁止**静默立项、禁止验收工具、禁止用 `completed` 冒充验收。
 
+## 已落地刀次
+
+1. **刀 1**：Features 减法 + delivery / overview / materials / sow / acceptance 路由占位
+2. **刀 2**：任务定义 revision（1:1 Issue）+ 独立验收表 `acceptance_*`（Web 最小读写；MCP 无验收工具）
+
 ## 文档
 
 - [phase-1-surface.md](./phase-1-surface.md) — 保留面 / 可藏 / 禁区
-- [naming.md](./naming.md) — 概念命名与状态边界
-- [mcp-interface-draft.md](./mcp-interface-draft.md) — MCP 接口草案（无实现）
+- [naming.md](./naming.md) — 概念命名、表名与 API
+- [mcp-interface-draft.md](./mcp-interface-draft.md) — MCP 接口草案（无实现；明确无验收工具）
