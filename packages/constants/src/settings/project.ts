@@ -111,6 +111,11 @@ export const PROJECT_SETTINGS: Record<TProjectSettingsTabs, TProjectSettingsItem
 
 export const PROJECT_SETTINGS_FLAT_MAP: TProjectSettingsItem[] = Object.values(PROJECT_SETTINGS);
 
+/**
+ * StringX Phase 1: Estimates and Automations stay routable but are omitted from
+ * the settings sidebar so they are not a first-class chrome surface.
+ * Cycles / Modules / Intake / Pages remain as explicit feature toggles (default off).
+ */
 export const GROUPED_PROJECT_SETTINGS: Record<PROJECT_SETTINGS_CATEGORY, TProjectSettingsItem[]> = {
   [PROJECT_SETTINGS_CATEGORY.GENERAL]: [PROJECT_SETTINGS["general"], PROJECT_SETTINGS["members"]],
   [PROJECT_SETTINGS_CATEGORY.FEATURES]: [
@@ -120,10 +125,6 @@ export const GROUPED_PROJECT_SETTINGS: Record<PROJECT_SETTINGS_CATEGORY, TProjec
     PROJECT_SETTINGS["features_pages"],
     PROJECT_SETTINGS["features_intake"],
   ],
-  [PROJECT_SETTINGS_CATEGORY.WORK_STRUCTURE]: [
-    PROJECT_SETTINGS["states"],
-    PROJECT_SETTINGS["labels"],
-    PROJECT_SETTINGS["estimates"],
-  ],
-  [PROJECT_SETTINGS_CATEGORY.EXECUTION]: [PROJECT_SETTINGS["automations"]],
+  [PROJECT_SETTINGS_CATEGORY.WORK_STRUCTURE]: [PROJECT_SETTINGS["states"], PROJECT_SETTINGS["labels"]],
+  [PROJECT_SETTINGS_CATEGORY.EXECUTION]: [],
 };

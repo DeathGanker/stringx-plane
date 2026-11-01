@@ -105,10 +105,13 @@ def create_project_and_member(workspace: Workspace, bot_user: User) -> Dict[int,
             name=workspace.name,  # Use workspace name
             identifier=project_identifier,
             created_by_id=bot_user.id,
-            # Enable all views in seed data
-            cycle_view=True,
-            module_view=True,
-            issue_views_view=True,
+            # StringX Phase 1: keep Cycles / Modules / Views / Pages / Intake off
+            # in seed projects. Cycles/Modules must not stand in for SOW M1–M4.
+            cycle_view=False,
+            module_view=False,
+            issue_views_view=False,
+            page_view=False,
+            intake_view=False,
         )
         project.save(created_by_id=bot_user.id, disable_auto_set_user=True)
 

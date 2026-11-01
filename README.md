@@ -24,6 +24,8 @@
     </a>
 </p>
 
+> **StringX fork** (`DeathGanker/stringx-plane`): delivery-line productization of Plane CE. See [`docs/stringx/`](./docs/stringx/) for Phase 1 surface, naming rules (Cycles/Modules ≠ M1–M4; `completed` ≠ acceptance), and MCP draft.
+
 Meet [Plane](https://plane.so/), an open-source project management tool to track issues, run ~sprints~ cycles, and manage product roadmaps without the chaos of managing the tool itself. 🧘‍♀️
 
 > Plane is evolving every day. Your suggestions, ideas, and reported bugs help us immensely. Do not hesitate to join in the conversation on [Forum](https://forum.plane.so) or raise a GitHub issue. We read everything and respond to most.

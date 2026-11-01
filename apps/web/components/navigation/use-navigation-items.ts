@@ -17,6 +17,7 @@ import {
 } from "@makeplane/propel/icons";
 import type { EUserProjectRoles, IPartialProject } from "@plane/types";
 import type { TNavigationItem } from "@/components/navigation/tab-navigation-root";
+import { getStringXProjectNavigationItems } from "@/components/stringx/navigation-items";
 
 type UseNavigationItemsProps = {
   workspaceSlug: string;
@@ -40,6 +41,7 @@ export const useNavigationItems = ({
   const baseNavigation = useCallback(
     // oxlint-disable-next-line no-shadow
     (workspaceSlug: string, projectId: string): TNavigationItem[] => [
+      ...getStringXProjectNavigationItems(workspaceSlug, projectId),
       {
         i18n_key: "sidebar.work_items",
         key: "work_items",

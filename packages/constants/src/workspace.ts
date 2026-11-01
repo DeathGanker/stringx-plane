@@ -48,6 +48,7 @@ export const RESTRICTED_URLS: string[] = [
   "m",
   "import",
   "importers",
+  "delivery",
   "integrations",
   "integration",
   "configuration",
@@ -193,6 +194,8 @@ export const DEFAULT_GLOBAL_VIEWS_LIST: {
 export interface IWorkspaceSidebarNavigationItem {
   key: string;
   labelTranslationKey: string;
+  /** When set, rendered as-is instead of translating `labelTranslationKey`. */
+  label?: string;
   href: string;
   access: EUserWorkspaceRoles[];
   highlight: (pathname: string, url: string) => boolean;
@@ -224,7 +227,7 @@ export const WORKSPACE_SIDEBAR_DYNAMIC_NAVIGATION_ITEMS: Record<string, IWorkspa
 
 export const WORKSPACE_SIDEBAR_DYNAMIC_NAVIGATION_ITEMS_LINKS: IWorkspaceSidebarNavigationItem[] = [
   WORKSPACE_SIDEBAR_DYNAMIC_NAVIGATION_ITEMS["views"],
-  WORKSPACE_SIDEBAR_DYNAMIC_NAVIGATION_ITEMS["analytics"],
+  // StringX Phase 1: Analytics omitted from primary workspace nav (not the delivery home).
   WORKSPACE_SIDEBAR_DYNAMIC_NAVIGATION_ITEMS["archives"],
 ];
 
@@ -264,6 +267,15 @@ export const WORKSPACE_SIDEBAR_STATIC_NAVIGATION_ITEMS: Record<string, IWorkspac
     access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
     highlight: (pathname: string, url: string) => pathname.includes(url),
   },
+  delivery: {
+    key: "delivery",
+    labelTranslationKey: "projects",
+    // Literal label bypasses i18n so we can ship StringX naming without locale churn.
+    label: "交付概况",
+    href: `/delivery/`,
+    access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER, EUserWorkspaceRoles.GUEST],
+    highlight: (pathname: string, url: string) => pathname.includes(url),
+  },
   projects: {
     key: "projects",
     labelTranslationKey: "projects",
@@ -278,6 +290,7 @@ export const WORKSPACE_SIDEBAR_STATIC_NAVIGATION_ITEMS_LINKS: IWorkspaceSidebarN
 ];
 
 export const WORKSPACE_SIDEBAR_STATIC_PINNED_NAVIGATION_ITEMS_LINKS: IWorkspaceSidebarNavigationItem[] = [
+  WORKSPACE_SIDEBAR_STATIC_NAVIGATION_ITEMS["delivery"],
   WORKSPACE_SIDEBAR_STATIC_NAVIGATION_ITEMS["projects"],
 ];
 
