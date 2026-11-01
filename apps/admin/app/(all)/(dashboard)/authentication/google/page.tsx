@@ -44,37 +44,35 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
     const updateConfigPromise = updateInstanceConfigurations(payload);
 
     setPromiseToast(updateConfigPromise, {
-      loading: "Saving Configuration",
+      loading: "正在保存配置",
       success: {
-        title: "Configuration saved",
-        message: () => `Google authentication is now ${value === "1" ? "active" : "disabled"}.`,
+        title: "配置已保存",
+        message: () => `Google 认证现已${value === "1" ? "启用" : "关闭"}。`,
       },
       error: {
-        title: "Error",
-        message: () => "Failed to save configuration",
+        title: "错误",
+        message: () => "保存配置失败",
       },
     });
 
-    await updateConfigPromise
-      .then(() => {
-        setIsSubmitting(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsSubmitting(false);
-      });
+    try {
+      await updateConfigPromise;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <PageWrapper
       customHeader={
         <AuthenticationMethodCard
           name="Google"
-          description="Allow members to login or sign up to plane with their Google
-            accounts."
+          description="允许成员使用 Google 账号登录或注册 Plane。"
           icon={<img src={GoogleLogo} height={24} width={24} alt="Google Logo" />}
           config={
             <Switch
-              aria-label="Enable Google authentication"
+              aria-label="启用 Google 认证"
               checked={Boolean(parseInt(enableGoogleConfig))}
               onCheckedChange={() => {
                 if (Boolean(parseInt(enableGoogleConfig)) === true) {
@@ -107,6 +105,6 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
   );
 });
 
-export const meta: Route.MetaFunction = () => [{ title: "Google Authentication - God Mode" }];
+export const meta: Route.MetaFunction = () => [{ title: "Google 认证 - God Mode" }];
 
 export default InstanceGoogleAuthenticationPage;
