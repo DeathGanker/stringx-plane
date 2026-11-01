@@ -56,9 +56,8 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
           if (!canDisable) {
             setToast({
               type: "error",
-              title: "Cannot disable authentication",
-              message:
-                "At least one authentication method must remain enabled. Please enable another method before disabling this one.",
+              title: "无法关闭该认证方式",
+              message: "至少需要保留一种认证方式。请先启用其他方式，再关闭当前方式。",
             });
             return;
           }
@@ -75,14 +74,14 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
       const updateConfigPromise = updateInstanceConfigurations(payload);
 
       setPromiseToast(updateConfigPromise, {
-        loading: "Saving configuration",
+        loading: "正在保存配置",
         success: {
-          title: "Success",
-          message: () => "Configuration saved successfully",
+          title: "成功",
+          message: () => "配置已保存",
         },
         error: {
-          title: "Error",
-          message: () => "Failed to save configuration",
+          title: "错误",
+          message: () => "保存配置失败",
         },
       });
 
@@ -114,8 +113,8 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
   return (
     <PageWrapper
       header={{
-        title: "Manage authentication modes for your instance",
-        description: "Configure authentication modes for your team and restrict sign-ups to be invite only.",
+        title: "管理本实例的认证方式",
+        description: "为团队配置认证方式，并可限制为仅邀请注册。",
       }}
     >
       {formattedConfig ? (
@@ -123,16 +122,16 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
           <div className={cn("flex w-full items-center gap-14 rounded-sm")}>
             <div className="flex grow items-center gap-4">
               <div className="grow">
-                <div className="pb-1 text-16 font-medium">Allow anyone to sign up even without an invite</div>
+                <div className="pb-1 text-16 font-medium">允许任何人注册（无需邀请）</div>
                 <div className={cn("text-11 leading-5 font-regular text-tertiary")}>
-                  Toggling this off will only let users sign up when they are invited.
+                  关闭后，用户仅能在收到邀请后注册。
                 </div>
               </div>
             </div>
             <div className={`shrink-0 pr-4 ${isSubmitting && "opacity-70"}`}>
               <div className="flex items-center gap-4">
                 <Switch
-                  aria-label="Allow anyone to sign up even without an invite"
+                  aria-label="允许任何人注册（无需邀请）"
                   checked={Boolean(parseInt(enableSignUpConfig))}
                   onCheckedChange={() => {
                     if (Boolean(parseInt(enableSignUpConfig)) === true) {
@@ -147,7 +146,7 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
               </div>
             </div>
           </div>
-          <div className="text-lg pt-6 font-medium">Available authentication modes</div>
+          <div className="text-lg pt-6 font-medium">可用认证方式</div>
           {authenticationModes.map((method) => (
             <AuthenticationMethodCard
               key={method.key}
@@ -173,6 +172,6 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
   );
 });
 
-export const meta: Route.MetaFunction = () => [{ title: "Authentication Settings - Plane Web" }];
+export const meta: Route.MetaFunction = () => [{ title: "认证设置 - God Mode" }];
 
 export default InstanceAuthenticationPage;

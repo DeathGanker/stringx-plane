@@ -16,9 +16,11 @@
 
 1. **刀 1**：Features 减法 + delivery / overview / materials / sow / acceptance 路由占位
 2. **刀 2**：任务定义 revision（1:1 Issue）+ 独立验收表 `acceptance_*`（Web 最小读写；MCP 无验收工具）
+3. **刀 3**：火山方舟（豆包）LLM Base URL 适配 + zh-CN 默认（见 [local-smoke.md](./local-smoke.md)）
 
 ## 文档
 
 - [phase-1-surface.md](./phase-1-surface.md) — 保留面 / 可藏 / 禁区
 - [naming.md](./naming.md) — 概念命名、表名与 API
 - [mcp-interface-draft.md](./mcp-interface-draft.md) — MCP 接口草案（无实现；明确无验收工具）
+- [local-smoke.md](./local-smoke.md) — 本机方舟 + 中文冒烟（无密钥）

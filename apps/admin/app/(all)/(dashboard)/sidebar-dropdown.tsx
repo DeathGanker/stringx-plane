@@ -58,13 +58,13 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
       <MenuSeparator />
       <MenuItem
         icon={<Icon icon={PaletteOutline} />}
-        label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+        label={`切换到${resolvedTheme === "dark" ? "浅色" : "深色"}模式`}
         onClick={handleThemeSwitch}
       />
       <MenuSeparator />
       <MenuItem
         icon={<Icon icon={LogOutOutline} />}
-        label="Sign out"
+        label="退出登录"
         onClick={() => signOutFormRef.current?.requestSubmit()}
       />
     </MenuContent>
@@ -97,7 +97,7 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
               render={
                 <button
                   type="button"
-                  aria-label="Instance admin menu"
+                  aria-label="实例管理员菜单"
                   className={cn("grid flex-shrink-0 place-items-center outline-none", {
                     "cursor-default": !isSidebarCollapsed,
                   })}
@@ -113,7 +113,7 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
 
           {!isSidebarCollapsed && (
             <div className="flex w-full gap-2">
-              <h4 className="grow truncate text-body-md-medium text-primary">Instance admin</h4>
+              <h4 className="grow truncate text-body-md-medium text-primary">实例管理员</h4>
             </div>
           )}
         </div>
@@ -125,7 +125,7 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
             render={
               <button
                 type="button"
-                aria-label="Account menu"
+                aria-label="账户菜单"
                 className="grid flex-shrink-0 place-items-center outline-none"
               >
                 <WorkspaceAvatar
