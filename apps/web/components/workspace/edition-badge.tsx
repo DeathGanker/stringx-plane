@@ -4,43 +4,29 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
 import { observer } from "mobx-react";
 // ui
-import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import packageJson from "package.json";
-// local components
-import { Button } from "@makeplane/propel/components/button";
-import { PaidPlanUpgradeModal } from "@/components/license/modal/upgrade-modal";
 
+/**
+ * StringX demo shell: version-only footer chip.
+ * No Community / Upgrade copy; does not open PaidPlanUpgradeModal.
+ */
 export const WorkspaceEditionBadge = observer(function WorkspaceEditionBadge() {
-  // states
-  const [isPaidPlanPurchaseModalOpen, setIsPaidPlanPurchaseModalOpen] = useState(false);
-  // translation
-  const { t } = useTranslation();
-  // platform
   const { isMobile } = usePlatformOS();
+  const versionLabel = `v${packageJson.version}`;
 
   return (
-    <>
-      <PaidPlanUpgradeModal
-        isOpen={isPaidPlanPurchaseModalOpen}
-        handleClose={() => setIsPaidPlanPurchaseModalOpen(false)}
-      />
-      <Tooltip label={`Version: v${packageJson.version}`} disabled={isMobile}>
-        <Button
-          variant="tertiary"
-          size="md"
-          stretch="auto"
-          label="Community"
-          onClick={() => setIsPaidPlanPurchaseModalOpen(true)}
-          aria-haspopup="dialog"
-          aria-label={t("aria_labels.projects_sidebar.edition_badge")}
-        />
-      </Tooltip>
-    </>
+    <Tooltip label={`版本：${versionLabel}`} disabled={isMobile}>
+      <span
+        className="inline-flex items-center rounded-sm px-2 py-1 text-11 text-tertiary"
+        aria-label={`版本 ${versionLabel}`}
+      >
+        {versionLabel}
+      </span>
+    </Tooltip>
   );
 });
