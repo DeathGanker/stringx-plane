@@ -64,9 +64,7 @@ export function InstanceGiteaConfigForm(props: Props) {
       key: "GITEA_HOST",
       type: "text",
       label: "Gitea Host",
-      description: (
-        <>Use the URL of your Gitea instance. For the official Gitea instance, use &quot;https://gitea.com&quot;.</>
-      ),
+      description: <>填写你的 Gitea 实例 URL。官方实例请使用 &quot;https://gitea.com&quot;。</>,
       placeholder: "https://gitea.com",
       error: Boolean(errors.GITEA_HOST),
       required: true,
@@ -77,15 +75,16 @@ export function InstanceGiteaConfigForm(props: Props) {
       label: "Client ID",
       description: (
         <>
-          You will get this from your{" "}
+          可在{" "}
           <a
             href="https://gitea.com/user/settings/applications"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
           >
-            Gitea OAuth application settings.
+            Gitea OAuth 应用设置
           </a>
+          中获取。
         </>
       ),
       placeholder: "70a44354520df8bd9bcd",
@@ -98,15 +97,16 @@ export function InstanceGiteaConfigForm(props: Props) {
       label: "Client secret",
       description: (
         <>
-          Your client secret is also found in your{" "}
+          Client secret 同样可在{" "}
           <a
             href="https://gitea.com/user/settings/applications"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
           >
-            Gitea OAuth application settings.
+            Gitea OAuth 应用设置
           </a>
+          中查看。
         </>
       ),
       placeholder: "9b0050f94ec1b744e32ce79ea4ffacd40d4119cb",
@@ -122,17 +122,17 @@ export function InstanceGiteaConfigForm(props: Props) {
       url: `${originURL}/auth/gitea/callback/`,
       description: (
         <>
-          We will auto-generate this. Paste this into your <CodeBlock darkerShade>Authorized Callback URI</CodeBlock>{" "}
-          field{" "}
+          将自动生成此地址。请粘贴到 <CodeBlock darkerShade>Authorized Callback URI</CodeBlock> 字段，可在{" "}
           <a
             href={`${control._formValues.GITEA_HOST || "https://gitea.com"}/user/settings/applications`}
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
-            aria-label="Gitea OAuth application settings"
+            aria-label="Gitea OAuth 应用设置"
           >
-            here.
+            此处
           </a>
+          配置。
         </>
       ),
     },
@@ -145,8 +145,8 @@ export function InstanceGiteaConfigForm(props: Props) {
       const response = await updateInstanceConfigurations(payload);
       setToast({
         type: "success",
-        title: "Done!",
-        message: "Your Gitea authentication is configured. You should test it now.",
+        title: "已完成",
+        message: "Gitea 认证已配置，建议立即测试登录。",
       });
       reset({
         GITEA_HOST: response.find((item) => item.key === "GITEA_HOST")?.value,
@@ -176,7 +176,7 @@ export function InstanceGiteaConfigForm(props: Props) {
       <div className="flex flex-col gap-8">
         <div className="grid w-full grid-cols-2 gap-x-12 gap-y-8">
           <div className="col-span-2 flex flex-col gap-y-4 pt-1 md:col-span-1">
-            <div className="pt-2.5 text-18 font-medium">Gitea-provided details for Plane</div>
+            <div className="pt-2.5 text-18 font-medium">Gitea 提供给 Plane 的信息</div>
             {GITEA_FORM_FIELDS.map((field) => (
               <ControllerInput
                 key={field.key}
@@ -215,7 +215,7 @@ export function InstanceGiteaConfigForm(props: Props) {
           </div>
           <div className="col-span-2 md:col-span-1">
             <div className="flex flex-col gap-y-4 rounded-lg bg-layer-1 px-6 pt-1.5 pb-4">
-              <div className="pt-2 text-18 font-medium">Plane-provided details for Gitea</div>
+              <div className="pt-2 text-18 font-medium">Plane 提供给 Gitea 的信息</div>
               {GITEA_SERVICE_FIELD.map((field) => (
                 <CopyField key={field.key} label={field.label} url={field.url} description={field.description} />
               ))}

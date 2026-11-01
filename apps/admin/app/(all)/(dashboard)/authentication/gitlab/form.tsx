@@ -66,7 +66,7 @@ export function InstanceGitlabConfigForm(props: Props) {
       label: "Host",
       description: (
         <>
-          This is either https://gitlab.com or the <CodeBlock>domain.tld</CodeBlock> where you host GitLab.
+          填写 https://gitlab.com，或你自建 GitLab 的 <CodeBlock>domain.tld</CodeBlock>。
         </>
       ),
       placeholder: "https://gitlab.com",
@@ -79,16 +79,16 @@ export function InstanceGitlabConfigForm(props: Props) {
       label: "Application ID",
       description: (
         <>
-          Get this from your{" "}
+          可在{" "}
           <a
             href="https://docs.gitlab.com/ee/integration/oauth_provider.html"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
           >
-            GitLab OAuth application settings
+            GitLab OAuth 应用设置
           </a>
-          .
+          中获取。
         </>
       ),
       placeholder: "c2ef2e7fc4e9d15aa7630f5637d59e8e4a27ff01dceebdb26b0d267b9adcf3c3",
@@ -101,16 +101,16 @@ export function InstanceGitlabConfigForm(props: Props) {
       label: "Secret",
       description: (
         <>
-          The client secret is also found in your{" "}
+          Secret 同样可在{" "}
           <a
             href="https://docs.gitlab.com/ee/integration/oauth_provider.html"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
           >
-            GitLab OAuth application settings
+            GitLab OAuth 应用设置
           </a>
-          .
+          中查看。
         </>
       ),
       placeholder: "gloas-f79cfa9a03c97f6ffab303177a5a6778a53c61e3914ba093412f68a9298a1b28",
@@ -126,16 +126,16 @@ export function InstanceGitlabConfigForm(props: Props) {
       url: `${originURL}/auth/gitlab/callback/`,
       description: (
         <>
-          We will auto-generate this. Paste this into the <CodeBlock darkerShade>Redirect URI</CodeBlock> field of your{" "}
+          将自动生成此地址。请粘贴到{" "}
           <a
             href="https://docs.gitlab.com/ee/integration/oauth_provider.html"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
           >
-            GitLab OAuth application
+            GitLab OAuth 应用
           </a>
-          .
+          的 <CodeBlock darkerShade>Redirect URI</CodeBlock> 字段。
         </>
       ),
     },
@@ -148,8 +148,8 @@ export function InstanceGitlabConfigForm(props: Props) {
       const response = await updateInstanceConfigurations(payload);
       setToast({
         type: "success",
-        title: "Done!",
-        message: "Your GitLab authentication is configured. You should test it now.",
+        title: "已完成",
+        message: "GitLab 认证已配置，建议立即测试登录。",
       });
       reset({
         GITLAB_HOST: response.find((item) => item.key === "GITLAB_HOST")?.value,
@@ -179,7 +179,7 @@ export function InstanceGitlabConfigForm(props: Props) {
       <div className="flex flex-col gap-8">
         <div className="grid w-full grid-cols-2 gap-x-12 gap-y-8">
           <div className="col-span-2 flex flex-col gap-y-4 pt-1 md:col-span-1">
-            <div className="pt-2.5 text-18 font-medium">GitLab-provided details for Plane</div>
+            <div className="pt-2.5 text-18 font-medium">GitLab 提供给 Plane 的信息</div>
             {GITLAB_FORM_FIELDS.map((field) => (
               <ControllerInput
                 key={field.key}
@@ -218,7 +218,7 @@ export function InstanceGitlabConfigForm(props: Props) {
           </div>
           <div className="col-span-2 md:col-span-1">
             <div className="flex flex-col gap-y-4 rounded-lg bg-layer-3 px-6 pt-1.5 pb-4">
-              <div className="pt-2 text-18 font-medium">Plane-provided details for GitLab</div>
+              <div className="pt-2 text-18 font-medium">Plane 提供给 GitLab 的信息</div>
               {GITLAB_SERVICE_FIELD.map((field) => (
                 <CopyField key={field.key} label={field.label} url={field.url} description={field.description} />
               ))}

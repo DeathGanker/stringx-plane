@@ -66,15 +66,15 @@ export function InstanceGoogleConfigForm(props: Props) {
       label: "Client ID",
       description: (
         <>
-          Your client ID lives in your Google API Console.{" "}
+          Client ID 可在 Google API Console 中查看。{" "}
           <a
             href="https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow#creatingcred"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
-            aria-label="Google OAuth client ID documentation"
+            aria-label="Google OAuth Client ID 文档"
           >
-            Learn more
+            了解更多
           </a>
         </>
       ),
@@ -88,15 +88,15 @@ export function InstanceGoogleConfigForm(props: Props) {
       label: "Client secret",
       description: (
         <>
-          Your client secret should also be in your Google API Console.{" "}
+          Client secret 同样可在 Google API Console 中查看。{" "}
           <a
             href="https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
-            aria-label="Google OAuth client secret documentation"
+            aria-label="Google OAuth Client secret 文档"
           >
-            Learn more
+            了解更多
           </a>
         </>
       ),
@@ -113,17 +113,17 @@ export function InstanceGoogleConfigForm(props: Props) {
       url: originURL,
       description: (
         <p>
-          We will auto-generate this. Paste this into your{" "}
-          <CodeBlock darkerShade>Authorized JavaScript origins</CodeBlock> field. For this OAuth client{" "}
+          将自动生成此地址。请粘贴到 <CodeBlock darkerShade>Authorized JavaScript origins</CodeBlock> 字段。可在{" "}
           <a
             href="https://console.cloud.google.com/apis/credentials/oauthclient"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
-            aria-label="Google Cloud Console OAuth client credentials"
+            aria-label="Google Cloud Console OAuth 客户端凭据"
           >
-            here.
+            此处
           </a>
+          配置该 OAuth 客户端。
         </p>
       ),
     },
@@ -136,17 +136,17 @@ export function InstanceGoogleConfigForm(props: Props) {
       url: `${originURL}/auth/google/callback/`,
       description: (
         <p>
-          We will auto-generate this. Paste this into your <CodeBlock darkerShade>Authorized Redirect URI</CodeBlock>{" "}
-          field. For this OAuth client{" "}
+          将自动生成此地址。请粘贴到 <CodeBlock darkerShade>Authorized Redirect URI</CodeBlock> 字段。可在{" "}
           <a
             href="https://console.cloud.google.com/apis/credentials/oauthclient"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
-            aria-label="Google Cloud Console OAuth client credentials"
+            aria-label="Google Cloud Console OAuth 客户端凭据"
           >
-            here.
+            此处
           </a>
+          配置该 OAuth 客户端。
         </p>
       ),
     },
@@ -159,8 +159,8 @@ export function InstanceGoogleConfigForm(props: Props) {
       const response = await updateInstanceConfigurations(payload);
       setToast({
         type: "success",
-        title: "Done!",
-        message: "Your Google authentication is configured. You should test it now.",
+        title: "已完成",
+        message: "Google 认证已配置，建议立即测试登录。",
       });
       reset({
         GOOGLE_CLIENT_ID: response.find((item) => item.key === "GOOGLE_CLIENT_ID")?.value,
@@ -189,7 +189,7 @@ export function InstanceGoogleConfigForm(props: Props) {
       <div className="flex flex-col gap-8">
         <div className="grid w-full grid-cols-2 gap-x-12 gap-y-8">
           <div className="col-span-2 flex flex-col gap-y-4 pt-1 md:col-span-1">
-            <div className="pt-2.5 text-18 font-medium">Google-provided details for Plane</div>
+            <div className="pt-2.5 text-18 font-medium">Google 提供给 Plane 的信息</div>
             {GOOGLE_FORM_FIELDS.map((field) => (
               <ControllerInput
                 key={field.key}
@@ -227,17 +227,15 @@ export function InstanceGoogleConfigForm(props: Props) {
             </div>
           </div>
           <div className="col-span-2 flex flex-col gap-y-6 md:col-span-1">
-            <div className="pt-2 text-18 font-medium">Plane-provided details for Google</div>
+            <div className="pt-2 text-18 font-medium">Plane 提供给 Google 的信息</div>
 
             <div className="flex flex-col gap-y-4">
-              {/* common service details */}
               <div className="flex flex-col gap-y-4 rounded-lg bg-layer-1 px-6 py-4">
                 {GOOGLE_COMMON_SERVICE_DETAILS.map((field) => (
                   <CopyField key={field.key} label={field.label} url={field.url} description={field.description} />
                 ))}
               </div>
 
-              {/* web service details */}
               <div className="flex flex-col overflow-hidden rounded-lg">
                 <div className="flex items-center gap-x-3 bg-layer-3 px-6 py-3 text-11 font-medium text-secondary uppercase">
                   <MonitorOutline className="h-3 w-3" />
