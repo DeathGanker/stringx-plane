@@ -67,15 +67,16 @@ export function InstanceGithubConfigForm(props: Props) {
       label: "Client ID",
       description: (
         <>
-          You will get this from your{" "}
+          可在{" "}
           <a
             href="https://github.com/settings/applications/new"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
           >
-            GitHub OAuth application settings.
+            GitHub OAuth 应用设置
           </a>
+          中获取。
         </>
       ),
       placeholder: "70a44354520df8bd9bcd",
@@ -88,15 +89,16 @@ export function InstanceGithubConfigForm(props: Props) {
       label: "Client secret",
       description: (
         <>
-          Your client secret is also found in your{" "}
+          Client secret 同样可在{" "}
           <a
             href="https://github.com/settings/applications/new"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
           >
-            GitHub OAuth application settings.
+            GitHub OAuth 应用设置
           </a>
+          中查看。
         </>
       ),
       placeholder: "9b0050f94ec1b744e32ce79ea4ffacd40d4119cb",
@@ -107,7 +109,7 @@ export function InstanceGithubConfigForm(props: Props) {
       key: "GITHUB_ORGANIZATION_ID",
       type: "text",
       label: "Organization ID",
-      description: <>The organization github ID.</>,
+      description: <>GitHub 组织 ID。</>,
       placeholder: "123456789",
       error: Boolean(errors.GITHUB_ORGANIZATION_ID),
       required: false,
@@ -121,16 +123,17 @@ export function InstanceGithubConfigForm(props: Props) {
       url: originURL,
       description: (
         <>
-          We will auto-generate this. Paste this into the <CodeBlock darkerShade>Authorized origin URL</CodeBlock> field{" "}
+          将自动生成此地址。请粘贴到 <CodeBlock darkerShade>Authorized origin URL</CodeBlock> 字段，可在{" "}
           <a
             href="https://github.com/settings/applications/new"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
-            aria-label="GitHub OAuth application settings"
+            aria-label="GitHub OAuth 应用设置"
           >
-            here.
+            此处
           </a>
+          配置。
         </>
       ),
     },
@@ -143,17 +146,17 @@ export function InstanceGithubConfigForm(props: Props) {
       url: `${originURL}/auth/github/callback/`,
       description: (
         <>
-          We will auto-generate this. Paste this into your <CodeBlock darkerShade>Authorized Callback URI</CodeBlock>{" "}
-          field{" "}
+          将自动生成此地址。请粘贴到 <CodeBlock darkerShade>Authorized Callback URI</CodeBlock> 字段，可在{" "}
           <a
             href="https://github.com/settings/applications/new"
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
-            aria-label="GitHub OAuth application settings"
+            aria-label="GitHub OAuth 应用设置"
           >
-            here.
+            此处
           </a>
+          配置。
         </>
       ),
     },
@@ -166,8 +169,8 @@ export function InstanceGithubConfigForm(props: Props) {
       const response = await updateInstanceConfigurations(payload);
       setToast({
         type: "success",
-        title: "Done!",
-        message: "Your GitHub authentication is configured. You should test it now.",
+        title: "已完成",
+        message: "GitHub 认证已配置，建议立即测试登录。",
       });
       reset({
         GITHUB_CLIENT_ID: response.find((item) => item.key === "GITHUB_CLIENT_ID")?.value,
@@ -197,7 +200,7 @@ export function InstanceGithubConfigForm(props: Props) {
       <div className="flex flex-col gap-8">
         <div className="grid w-full grid-cols-2 gap-x-12 gap-y-8">
           <div className="col-span-2 flex flex-col gap-y-4 pt-1 md:col-span-1">
-            <div className="pt-2.5 text-18 font-medium">GitHub-provided details for Plane</div>
+            <div className="pt-2.5 text-18 font-medium">GitHub 提供给 Plane 的信息</div>
             {GITHUB_FORM_FIELDS.map((field) => (
               <ControllerInput
                 key={field.key}
@@ -235,17 +238,15 @@ export function InstanceGithubConfigForm(props: Props) {
             </div>
           </div>
           <div className="col-span-2 flex flex-col gap-y-6 md:col-span-1">
-            <div className="pt-2 text-18 font-medium">Plane-provided details for GitHub</div>
+            <div className="pt-2 text-18 font-medium">Plane 提供给 GitHub 的信息</div>
 
             <div className="flex flex-col gap-y-4">
-              {/* common service details */}
               <div className="flex flex-col gap-y-4 rounded-lg bg-layer-1 px-6 py-4">
                 {GITHUB_COMMON_SERVICE_DETAILS.map((field) => (
                   <CopyField key={field.key} label={field.label} url={field.url} description={field.description} />
                 ))}
               </div>
 
-              {/* web service details */}
               <div className="flex flex-col overflow-hidden rounded-lg">
                 <div className="flex items-center gap-x-3 bg-layer-3 px-6 py-3 text-11 font-medium text-secondary uppercase">
                   <MonitorOutline className="h-3 w-3" />

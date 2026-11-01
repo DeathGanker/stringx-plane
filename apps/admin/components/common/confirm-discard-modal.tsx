@@ -37,10 +37,10 @@ export function ConfirmDiscardModal(props: Props) {
       isSubmitting={false}
       variant="primary"
       hideIcon
-      title="You have unsaved changes"
-      content="Changes you made will be lost if you go back. Do you wish to go back?"
-      primaryButtonText={{ default: "Go back" }}
-      secondaryButtonText="Keep editing"
+      title="有未保存的更改"
+      content="返回后将丢失已修改的内容。确定要返回吗？"
+      primaryButtonText={{ default: "返回" }}
+      secondaryButtonText="继续编辑"
     />
   );
 }
